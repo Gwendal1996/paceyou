@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PaceYou — Deviens ton champion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────────────── */
+:root {
+  --ink: #1a1814;
+  --ink2: #3d3b36;
+  --paper: #f7f4ef;
+  --paper2: #eeeae2;
+  --paper3: #e5e1d8;
+  --paper4: #dad6cc;
+  --accent: #c8502a;
+  --accent-l: #fdf0eb;
+  --accent-d: #9e3c1e;
+  --green: #2a6e4a;
+  --green-l: #f0f7f3;
+  --green-d: #1b4332;
+  --muted: #8a8478;
+  --muted2: #b5b0a6;
+  --border: rgba(26,24,20,.09);
+  --border2: rgba(26,24,20,.17);
+  --border3: rgba(26,24,20,.28);
+  --r: 10px;
+  --rl: 14px;
+  --rxl: 20px;
+  --shadow: 0 2px 8px rgba(26,24,20,.07);
+  --shadow2: 0 4px 20px rgba(26,24,20,.1);
+}
+/* ─── RESET ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--paper3);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+/* ─── NAV ────────────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .9rem 2rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--shadow);
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.logo em { color: var(--accent); font-style: normal; }
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--paper2);
+  border-radius: var(--r);
+  padding: 3px;
+  border: 1px solid var(--border);
+}
+.tab {
+  padding: 7px 14px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  border-radius: 8px;
+  transition: all .2s;
+  white-space: nowrap;
+  letter-spacing: .01em;
+}
+.tab.active {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(26,24,20,.12);
+}
+.tab:disabled { opacity: .3; cursor: not-allowed; }
+.tab:not(:disabled):not(.active):hover { background: var(--paper3); color: var(--ink2); }
+/* ─── PAGES ──────────────────────────────────────────────────────── */
+.page { display: none; }
+.page.active { display: block; animation: fadeUp .3s ease; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.wrap { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+/* ─── HERO ────────────────────────────────────────────────────────── */
+.hero {
+  text-align: center;
+  padding: 5rem 1.5rem 3.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 1.2rem;
+}
+.hero-title em { color: var(--accent); font-style: italic; }
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.75;
+  font-weight: 400;
+}
+/* ─── BUTTONS ────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,80,42,.25); }
+.btn-secondary { background: transparent; color: var(--ink); border: 1.5px solid var(--border3); }
+.btn-secondary:hover { background: var(--paper2); border-color: var(--ink); }
+.btn-sm { padding: 8px 18px; font-size: 12px; }
+.btn-xs { padding: 6px 13px; font-size: 11px; }
+.btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+/* ─── PHILOSOPHY STRIP ────────────────────────────────────────────── */
+.phil-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--border);
+  border: 1px solid var(--border2);
+  border-radius: var(--rl);
+  overflow: hidden;
+  gap: 1px;
+  margin: 0 1.5rem 2.5rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: var(--shadow);
+}
+.phil-item { background: var(--paper); padding: 1.8rem 1.5rem; }
+.phil-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  opacity: .18;
+  line-height: 1;
+  margin-bottom: .6rem;
+}
+.phil-label { font-size: 14px; font-weight: 700; margin-bottom: .4rem; }
+.phil-text { font-size: 12px; color: var(--muted); line-height: 1.65; }
+/* ─── ONBOARDING ─────────────────────────────────────────────────── */
+.ob-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--rxl);
+  padding: 2.5rem;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  box-shadow: var(--shadow2);
+}
+.ob-progress { display: flex; gap: 5px; margin-bottom: 2rem; }
+.od { flex: 1; height: 3px; border-radius: 2px; background: var(--border2); transition: background .35s; }
+.od.done { background: var(--green); }
+.od.cur { background: var(--accent); }
+.ob-step { display: none; }
+.ob-step.active { display: block; animation: fadeUp .25s ease; }
+.ob-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: .4rem;
+  letter-spacing: -.01em;
+}
+.ob-sub { font-size: 13px; color: var(--muted); margin-bottom: 1.6rem; line-height: 1.7; }
+.ob-intro-box {
+  background: var(--green-l);
+  border: 1px solid rgba(42,110,74,.15);
+  border-radius: var(--rl);
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1.8rem;
+  font-size: 13px;
+  color: var(--green-d);
+  line-height: 1.9;
+}
+.ob-intro-box strong { color: var(--green-d); }
+/* ─── CHOICE GRIDS ────────────────────────────────────────────────── */
+.cgrid { display: grid; gap: 9px; margin-bottom: 1.4rem; }
+.cg2 { grid-template-columns: 1fr 1fr; }
+.cc {
+  border: 1.5px solid var(--border2);
+  border-radius: var(--rl);
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+  background: var(--paper);
+}
+.cc:hover { border-color: var(--accent); background: var(--accent-l); }
+.cc.sel { border-color: var(--accent); border-width: 2px; background: var(--accent-l); }
+.cc.sel .cct { color: var(--accent); }
+.cct { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.ccd { font-size: 12px; color: var(--muted); line-height: 1.5; }
+/* ─── MULTI CHOICE ────────────────────────────────────────────────── */
+.mcard {
+  border: 1.5px solid var(--border2);
+  border-radius: var(--r);
+  padding: .9rem 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  transition: all .15s;
+  background: var(--paper);
+}
+.mcard:hover { border-color: var(--green); background: var(--green-l); }
+.mcard.sel { border-color: var(--green); border-width: 2px; background: var(--green-l); }
+.mchk {
+  width: 18px; height: 18px;
+  border-radius: 5px;
+  border: 2px solid var(--border3);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.mcard.sel .mchk { background: var(--green); border-color: var(--green); }
+.chk { width: 10px; height: 10px; stroke: white; display: none; }
+.mcard.sel .chk { display: block; }
+.mc-label { font-size: 13px; font-weight: 600; }
+.mc-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+/* ─── SLIDERS & INPUTS ────────────────────────────────────────────── */
+.slwrap { margin-bottom: 1.4rem; }
+.slrow { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.sl-label { font-size: 13px; font-weight: 500; color: var(--ink2); }
+.sl-val { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
+input[type=range] {
+  width: 100%;
+  height: 5px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.sl-ticks { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 3px; }
+.inp {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid var(--border2);
+  border-radius: var(--r);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  background: var(--paper);
+  color: var(--ink);
+  transition: border-color .2s;
+  outline: none;
+}
+.inp:focus { border-color: var(--accent); }
+.inp-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 1rem;
+}
+textarea.inp { resize: vertical; min-height: 80px; line-height: 1.6; }
+.wk-badge {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 8px 0 1rem;
+}
+.wk-badge.ok { background: var(--green-l); color: var(--green-d); border: 1px solid rgba(42,110,74,.15); }
+.wk-badge.warn { background: var(--accent-l); color: var(--accent-d); border: 1px solid rgba(200,80,42,.15); }
+.btn-row { display: flex; gap: 9px; margin-top: 1.2rem; }
+.insight-tip {
+  background: #e8f1fb;
+  border: 1px solid rgba(24,95,165,.15);
+  border-radius: var(--r);
+  padding: 10px 13px;
+  font-size: 12px;
+  color: #0c447c;
+  line-height: 1.6;
+  margin-bottom: .9rem;
+}
+/* ─── CARDS ──────────────────────────────────────────────────────── */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--rl);
+  padding: 1.3rem 1.4rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 1rem;
+}
+/* ─── METRICS ────────────────────────────────────────────────────── */
+.mrow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 1rem; }
+.met {
+  background: var(--paper2);
+  border-radius: var(--r);
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+}
+.m-lbl { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+.m-val { font-size: 1.6rem; font-weight: 700; line-height: 1.1; color: var(--ink); }
+.m-unit { font-size: 12px; font-weight: 400; }
+.m-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.m-up { color: #2a6e4a; }
+.m-down { color: var(--accent); }
+/* ─── BADGES ─────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.badge-green { background: #d8f3dc; color: #1b4332; }
+.badge-orange { background: var(--accent-l); color: var(--accent-d); }
+.badge-blue { background: #e6f1fb; color: #0c447c; }
+.badge-gray { background: var(--paper2); color: var(--muted); border: 1px solid var(--border2); }
+/* ─── INSIGHTS ───────────────────────────────────────────────────── */
+.insight {
+  border-left: 3px solid var(--green);
+  padding: 10px 14px;
+  margin-bottom: 9px;
+  background: var(--green-l);
+  border-radius: 0 var(--r) var(--r) 0;
+  font-size: 12px;
+  color: var(--green-d);
+  line-height: 1.65;
+}
+.insight.warn { border-color: var(--accent); background: var(--accent-l); color: #7a2e10; }
+.insight strong { font-weight: 700; }
+/* ─── TWO COL ─────────────────────────────────────────────────────── */
+.row { display: flex; gap: 1rem; align-items: flex-start; }
+.col { flex: 1; min-width: 0; }
+/* ─── WEEK GRID ──────────────────────────────────────────────────── */
+.wgrid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.dcell {
+  background: var(--paper2);
+  border: 1.5px solid transparent;
+  border-radius: var(--r);
+  padding: 8px 4px;
+  text-align: center;
+  min-height: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all .15s;
+}
+.dcell:hover { border-color: var(--accent); background: var(--accent-l); }
+.dcell.sel-day { border-color: var(--accent); border-width: 2px; background: var(--accent-l); }
+.d-name { font-size: 9px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.d-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800;
+}
+.dt { background: var(--ink); color: var(--paper); }
+.de { background: #d8f3dc; color: #1b4332; }
+.ds { background: #e6f1fb; color: #0c447c; }
+.dh { background: #eeedfe; color: #3c3489; }
+.drest { background: var(--paper3); color: var(--muted2); }
+.d-info { font-size: 8px; color: var(--muted); line-height: 1.3; font-weight: 500; }
+/* ─── SESSION DETAIL ─────────────────────────────────────────────── */
+.session-detail {
+  background: var(--paper);
+  border: 2px solid var(--accent);
+  border-radius: var(--rl);
+  padding: 1.4rem;
+  margin-top: .9rem;
+  animation: fadeUp .2s ease;
+  box-shadow: 0 0 0 4px rgba(200,80,42,.06);
+}
+.sd-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: .5rem; }
+.sd-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; }
+.sd-meta { font-size: 11px; color: var(--muted); margin-bottom: 1rem; font-weight: 500; }
+.sd-block {
+  background: var(--paper2);
+  border-radius: var(--r);
+  padding: .9rem 1rem;
+  margin-bottom: .7rem;
+  border: 1px solid var(--border);
+}
+.sd-block-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin-bottom: .4rem;
+}
+.sd-content { font-size: 13px; line-height: 1.75; color: var(--ink2); }
+.coach-tip {
+  background: linear-gradient(135deg, #fdf8f5 0%, #fdf4f0 100%);
+  border: 1px solid rgba(200,80,42,.2);
+  border-radius: var(--r);
+  padding: 1rem 1.1rem;
+  margin-top: .7rem;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.coach-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(26,24,20,.2);
+}
+.coach-tip-inner {}
+.coach-tip-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.coach-tip-text { font-size: 12px; line-height: 1.7; color: var(--ink2); font-style: italic; }
+.nutri-note {
+  margin-top: 8px;
+  padding: 8px 11px;
+  background: rgba(255,255,255,.7);
+  border-radius: 7px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+/* ─── WEEK RECAP ─────────────────────────────────────────────────── */
+.tip-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: var(--paper2);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  margin: 2px;
+}
+.week-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+.wl-item { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 4px; font-weight: 500; }
+.wl-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+/* ─── CAL NAV ────────────────────────────────────────────────────── */
+.cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.cal-nav h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
+.cal-btn-nav {
+  background: var(--paper);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all .15s;
+}
+.cal-btn-nav:hover { background: var(--paper2); border-color: var(--border3); }
+/* ─── PROGRAMME ──────────────────────────────────────────────────── */
+.prog-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.prog-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; }
+.prog-header p { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.phasebar { display: flex; gap: 3px; height: 26px; margin-bottom: 9px; }
+.phseg {
+  border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: white;
+  overflow: hidden;
+  letter-spacing: .03em;
+}
+.pw { display: flex; align-items: center; gap: 9px; padding: 5px 0; border-bottom: 1px solid var(--border); }
+.pw:last-child { border: none; }
+.pwn { font-size: 10px; color: var(--muted); width: 38px; flex-shrink: 0; font-weight: 600; }
+.pwbw { flex: 1; background: var(--paper2); border-radius: 3px; height: 7px; }
+.pwb { height: 7px; border-radius: 3px; background: var(--ink); transition: width .5s ease; }
+.pwb.rec { background: var(--muted2); }
+.pwb.tap { background: var(--green); }
+.pwkm { font-size: 10px; color: var(--muted); width: 40px; text-align: right; flex-shrink: 0; font-weight: 600; }
+.zone-row { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+.zone-lbl { font-size: 11px; color: var(--muted); width: 70px; flex-shrink: 0; font-weight: 500; }
+.zone-bw { flex: 1; background: var(--paper2); border-radius: 3px; height: 7px; overflow: hidden; }
+.zone-bar { height: 7px; border-radius: 3px; }
+.zone-pct { font-size: 11px; color: var(--muted); width: 28px; text-align: right; flex-shrink: 0; font-weight: 600; }
+.zone-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 8px;
+  padding: 9px 12px;
+  background: var(--paper2);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  line-height: 1.6;
+  font-style: italic;
+}
+/* ─── COACH CHAT ─────────────────────────────────────────────────── */
+.coach-wrap { display: flex; flex-direction: column; }
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 380px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding-right: 4px;
+}
+.chat-area::-webkit-scrollbar { width: 4px; }
+.chat-area::-webkit-scrollbar-thumb { background: var(--paper3); border-radius: 2px; }
+.bubble {
+  max-width: 82%;
+  padding: 11px 15px;
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.bubble.user {
+  background: var(--ink);
+  color: var(--paper);
+  align-self: flex-end;
+  border-radius: 16px 16px 3px 16px;
+}
+.bubble.coach {
+  background: var(--paper2);
+  color: var(--ink);
+  align-self: flex-start;
+  border-radius: 16px 16px 16px 3px;
+  border: 1px solid var(--border);
+}
+.bubble.coach strong { color: var(--accent); }
+.chat-input-row { display: flex; gap: 8px; }
+.chat-input {
+  flex: 1;
+  padding: 11px 16px;
+  border: 1.5px solid var(--border2);
+  border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  background: var(--paper);
+  color: var(--ink);
+  transition: border-color .2s;
+  outline: none;
+}
+.chat-input:focus { border-color: var(--accent); }
+.send-btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 100px;
+  padding: 11px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.send-btn:hover { background: var(--accent); }
+.quick-qs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: .9rem; }
+.qq {
+  padding: 6px 13px;
+  border: 1.5px solid var(--border2);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink2);
+  cursor: pointer;
+  background: var(--paper);
+  transition: all .15s;
+}
+.qq:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-l); }
+.dot-pulse { display: flex; gap: 4px; align-items: center; }
+.dot-pulse span {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.dot-pulse span:nth-child(2) { animation-delay: .2s; }
+.dot-pulse span:nth-child(3) { animation-delay: .4s; }
+@keyframes pulse { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
+/* ─── DATA / IMPORT ──────────────────────────────────────────────── */
+.src-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1rem; }
+.src-card {
+  border: 1.5px solid var(--border2);
+  border-radius: var(--rl);
+  padding: 1.1rem;
+  cursor: pointer;
+  transition: all .15s;
+  text-align: center;
+  background: var(--paper);
+}
+.src-card:hover, .src-card.sel { border-color: var(--green); background: var(--green-l); }
+.src-card .sc-ico { font-size: 28px; margin-bottom: 6px; }
+.src-card .sc-name { font-size: 12px; font-weight: 700; color: var(--ink); }
+.src-card.sel .sc-name { color: var(--green); }
+.src-card .sc-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.dropzone {
+  border: 2px dashed var(--border3);
+  border-radius: var(--rl);
+  padding: 2.2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  background: var(--paper);
+}
+.dropzone:hover { border-color: var(--green); background: var(--green-l); }
+.dropzone.drag { border-color: var(--green); background: var(--green-l); }
+.dropzone-ico { font-size: 32px; margin-bottom: 10px; }
+.dropzone-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.dropzone-sub { font-size: 12px; color: var(--muted); }
+/* ─── CHARTS ─────────────────────────────────────────────────────── */
+.ch-wrap { position: relative; }
+.ch-160 { height: 160px; }
+.ch-180 { height: 180px; }
+.ch-140 { height: 140px; }
+.ch-note { font-size: 10px; color: var(--muted); text-align: center; margin-top: 6px; }
+/* ─── SECTION HEADER ─────────────────────────────────────────────── */
+.sec-h { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.sec-h h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; }
+.sec-h p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+/* ─── ACTIVITY LIST ──────────────────────────────────────────────── */
+.act-list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .7rem; }
+.flt-row { display: flex; gap: 5px; }
+.flt {
+  padding: 5px 13px;
+  border: 1.5px solid var(--border2);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--muted);
+  transition: all .15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.flt.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.act-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.act-item:last-child { border: none; }
+.act-ico {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.act-name { font-size: 13px; font-weight: 600; }
+.act-meta { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.act-right { text-align: right; flex-shrink: 0; }
+.act-dist { font-size: 14px; font-weight: 700; }
+.act-elev { font-size: 10px; color: var(--muted); }
+/* ─── DIVIDER ────────────────────────────────────────────────────── */
+.div { height: 1px; background: var(--border); margin: .9rem 0; }
+/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .nav { padding: .8rem 1rem; }
+  .nav-tabs .tab { padding: 6px 9px; font-size: 10px; }
+  .wrap { padding: 1.2rem 1rem; }
+  .mrow { grid-template-columns: repeat(2, 1fr); }
+  .row { flex-direction: column; }
+  .cg2 { grid-template-columns: 1fr; }
+  .src-grid { grid-template-columns: 1fr; }
+  .phil-strip { grid-template-columns: 1fr; margin: 0 1rem 2rem; }
+  .ob-card { padding: 1.5rem; margin: 0 1rem 2rem; }
+  .hero { padding: 3rem 1rem 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="logo" onclick="goPg('home',document.getElementById('nav-home'));return false;">Pace<em>You</em></a>
+  <div class="nav-tabs">
+    <button class="tab active" id="nav-home" onclick="goPg('home',this)">Accueil</button>
+    <button class="tab" id="nav-cal"   onclick="goPg('cal',this)"   disabled>Calendrier</button>
+    <button class="tab" id="nav-prog"  onclick="goPg('prog',this)"  disabled>Programme</button>
+    <button class="tab" id="nav-coach" onclick="goPg('coach',this)" disabled>Coach</button>
+    <button class="tab" id="nav-data"  onclick="goPg('data',this)">Données</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ HOME ═══════════════════════════════ -->
+<div id="pg-home" class="page active">
+
+  <div class="hero">
+    <div class="hero-eyebrow">Ton rythme · Ta façon · Gratuit</div>
+    <h1 class="hero-title">Deviens <em>ton champion</em>,<br>pas celui d'un autre.</h1>
+    <p class="hero-sub">Un coach IA qui te parle vrai, t'explique le pourquoi de chaque séance, et s'adapte à ta vie — pas à un plan générique sorti d'un magazine.</p>
+    <button class="btn btn-primary" onclick="scrollOb()">Créer mon profil gratuitement →</button>
+  </div>
+
+  <div class="phil-strip">
+    <div class="phil-item">
+      <div class="phil-num">01</div>
+      <div class="phil-label">Trouve ton plaisir</div>
+      <div class="phil-text">Si courir devient une corvée, quelque chose ne va pas. On repart toujours de là : pourquoi toi tu cours.</div>
+    </div>
+    <div class="phil-item">
+      <div class="phil-num">02</div>
+      <div class="phil-label">Comprends le pourquoi</div>
+      <div class="phil-text">Chaque conseil a une raison. Je n'impose rien — j'explique. L'objectif : que tu n'aies plus besoin de moi.</div>
+    </div>
+    <div class="phil-item">
+      <div class="phil-num">03</div>
+      <div class="phil-label">Écoute ton corps</div>
+      <div class="phil-text">Le ressenti reste le chef d'orchestre. Les données ? De bons instruments, jamais des maîtres.</div>
+    </div>
+  </div>
+
+  <!-- ONBOARDING -->
+  <div class="ob-card" id="ob-card">
+    <div class="ob-progress">
+      <div class="od cur" id="od0"></div><div class="od" id="od1"></div>
+      <div class="od" id="od2"></div><div class="od" id="od3"></div>
+      <div class="od" id="od4"></div><div class="od" id="od5"></div>
+    </div>
+
+    <!-- S0 — Welcome -->
+    <div class="ob-step active" id="os0">
+      <div class="ob-title">Bienvenue 👋</div>
+      <div class="ob-sub">6 questions pour que ton coach te comprenne vraiment. Pas un formulaire générique — une conversation de départ.</div>
+      <div class="ob-intro-box">
+        <strong>Ce que PaceYou va générer pour toi :</strong><br>
+        → Un programme semaine par semaine avec des séances précises<br>
+        → Des conseils nutrition et récup intégrés au quotidien<br>
+        → Un coach IA disponible 24h/24 qui explique toujours le pourquoi<br>
+        → Une analyse de tes données Garmin · Strava · Coros
+      </div>
+      <button class="btn btn-primary" onclick="ns()">C'est parti →</button>
+    </div>
+
+    <!-- S1 — Objectif -->
+    <div class="ob-step" id="os1">
+      <div class="ob-title">Quel est ton objectif ?</div>
+      <div class="ob-sub">Pas ce qu'on te dit de vouloir. Ce que tu veux vraiment, toi, maintenant.</div>
+      <div class="cgrid cg2">
+        <div class="cc" onclick="sel(this,'goal','5k10k')"><div class="cct">5km – 10km</div><div class="ccd">Progresser, s'améliorer, courir pour le plaisir de courir</div></div>
+        <div class="cc" onclick="sel(this,'goal','semi')"><div class="cct">Semi-marathon</div><div class="ccd">21 km — le sweet spot entre endurance et vitesse</div></div>
+        <div class="cc" onclick="sel(this,'goal','marathon')"><div class="cct">Marathon</div><div class="ccd">42 km — un projet de vie autant que sportif</div></div>
+        <div class="cc" onclick="sel(this,'goal','trail')"><div class="cct">Trail / Ultra</div><div class="ccd">La nature, le dénivelé, les longues heures en montagne</div></div>
+        <div class="cc" style="grid-column:1/-1" onclick="sel(this,'goal','sante')"><div class="cct">Santé & bien-être</div><div class="ccd">Courir pour se sentir bien — et c'est un objectif aussi valable que n'importe quel autre</div></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="ps()">← Retour</button><button class="btn btn-primary btn-sm" id="bn1" onclick="ns()" disabled>Suivant →</button></div>
+    </div>
+
+    <!-- S2 — Niveau -->
+    <div class="ob-step" id="os2">
+      <div class="ob-title">Où en es-tu aujourd'hui ?</div>
+      <div class="ob-sub">Honnêteté totale — pas de jugement. On doit juste savoir d'où on part.</div>
+      <div class="cgrid">
+        <div class="cc" onclick="sel(this,'level','debut')" style="display:flex;gap:12px;align-items:flex-start"><div style="font-size:22px;flex-shrink:0">🌱</div><div><div class="cct">Je débute ou je reprends</div><div class="ccd">Moins d'1 an de pratique régulière, ou retour après une pause</div></div></div>
+        <div class="cc" onclick="sel(this,'level','inter')" style="display:flex;gap:12px;align-items:flex-start"><div style="font-size:22px;flex-shrink:0">🏃</div><div><div class="cct">J'ai une base solide</div><div class="ccd">1–3 ans, quelques courses au compteur, 25–50 km/sem</div></div></div>
+        <div class="cc" onclick="sel(this,'level','confirme')" style="display:flex;gap:12px;align-items:flex-start"><div style="font-size:22px;flex-shrink:0">⛰️</div><div><div class="cct">Régulier et expérimenté</div><div class="ccd">3+ ans, 50–70 km/sem, je connais bien mon corps</div></div></div>
+        <div class="cc" onclick="sel(this,'level','perf')" style="display:flex;gap:12px;align-items:flex-start"><div style="font-size:22px;flex-shrink:0">🎯</div><div><div class="cct">Je vise la performance</div><div class="ccd">Objectif temps ou classement, 70+ km/sem, entraînement sérieux</div></div></div>
+      </div>
+      <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="ps()">← Retour</button><button class="btn btn-primary btn-sm" id="bn2" onclick="ns()" disabled>Suivant →</button></div>
+    </div>
+
+    <!-- S3 — Dispo & Volume -->
+    <div class="ob-step" id="os3">
+      <div class="ob-title">Ta disponibilité</div>
+      <div class="ob-sub">Le programme doit s'adapter à ta vie — pas l'inverse. Sois réaliste.</div>
+      <div class="slwrap">
+        <div class="slrow"><span class="sl-label">Séances course / semaine</span><span class="sl-val" id="v-run">3</span></div>
+        <input type="range" min="1" max="6" value="3" step="1" oninput="document.getElementById('v-run').textContent=this.value;P.runSeances=+this.value;updRenfoSug()">
+        <div class="sl-ticks"><span>1</span><span>3</span><span>6</span></div>
+      </div>
+      <div class="slwrap">
+        <div class="slrow"><span class="sl-label">Séances renforcement / semaine</span><span class="sl-val" id="v-renfo">2</span></div>
+        <input type="range" min="0" max="4" value="2" step="1" oninput="document.getElementById('v-renfo').textContent=this.value;P.renfoSeances=+this.value">
+        <div class="sl-ticks"><span>0</span><span>2</span><span>4</span></div>
+      </div>
+      <div id="renfo-sug" class="insight-tip" style="margin-bottom:1rem;font-size:12px"></div>
+      <div class="slwrap">
+        <div class="slrow"><span class="sl-label">Volume course actuel (km/semaine)</span><span class="sl-val" id="v-vol">35</span></div>
+        <input type="range" min="5" max="100" value="35" step="5" oninput="document.getElementById('v-vol').textContent=this.value;P.volActuel=+this.value">
+        <div class="sl-ticks"><span>5km</span><span>50km</span><span>100km</span></div>
+      </div>
+      <label class="inp-label">Date de ta course cible <span style="font-weight:400;color:var(--muted2)">(optionnel)</span></label>
+      <input type="date" class="inp" id="race-date" onchange="P.raceDate=this.value;calcWks();document.getElementById('bgen').disabled=false"/>
+      <div id="wkbadge" style="display:none" class="wk-badge ok"></div>
+      <label class="inp-label">Nom de la course <span style="font-weight:400;color:var(--muted2)">(optionnel)</span></label>
+      <input type="text" class="inp" placeholder="ex : UTMB, Marathon de Paris, Trail des Glières…" onchange="P.raceName=this.value"/>
+      <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="ps()">← Retour</button><button class="btn btn-primary btn-sm" onclick="ns()">Suivant →</button></div>
+    </div>
+
+    <!-- S4 — Priorités -->
+    <div class="ob-step" id="os4">
+      <div class="ob-title">Ce qui compte pour toi</div>
+      <div class="ob-sub">Sélectionne tout ce qui s'applique — ton programme l'intégrera.</div>
+      <div class="mcard" onclick="togP(this,'plaisir')"><div class="mchk"><svg class="chk" viewBox="0 0 9 9" fill="none"><polyline points="1,4.5 3.5,7 8,1.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="mc-label">😄 Rester dans le plaisir avant tout</div><div class="mc-sub">Si c'est pas fun, on ajuste — toujours</div></div></div>
+      <div class="mcard" onclick="togP(this,'comprendre')"><div class="mchk"><svg class="chk" viewBox="0 0 9 9" fill="none"><polyline points="1,4.5 3.5,7 8,1.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="mc-label">🧠 Comprendre l'entraînement en profondeur</div><div class="mc-sub">Devenir autonome — pas dépendant d'un plan</div></div></div>
+      <div class="mcard" onclick="togP(this,'corps')"><div class="mchk"><svg class="chk" viewBox="0 0 9 9" fill="none"><polyline points="1,4.5 3.5,7 8,1.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="mc-label">🩺 Rester en bonne santé, éviter les blessures</div><div class="mc-sub">La prévention passe avant la performance</div></div></div>
+      <div class="mcard" onclick="togP(this,'progression')"><div class="mchk"><svg class="chk" viewBox="0 0 9 9" fill="none"><polyline points="1,4.5 3.5,7 8,1.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="mc-label">📈 Progresser sur le long terme</div><div class="mc-sub">Lent et solide plutôt que rapide et risqué</div></div></div>
+      <div class="mcard" onclick="togP(this,'variete')"><div class="mchk"><svg class="chk" viewBox="0 0 9 9" fill="none"><polyline points="1,4.5 3.5,7 8,1.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="mc-label">🎲 Variété et séances surprises</div><div class="mc-sub">Jamais deux séances identiques dans le même bloc</div></div></div>
+      <div class="btn-row" style="margin-top:1rem"><button class="btn btn-secondary btn-sm" onclick="ps()">← Retour</button><button class="btn btn-primary btn-sm" id="bn4" onclick="ns()" disabled>Suivant →</button></div>
+    </div>
+
+    <!-- S5 — Mot libre -->
+    <div class="ob-step" id="os5">
+      <div class="ob-title">Un dernier truc</div>
+      <div class="ob-sub">Ce que les questions précédentes n'ont pas capturé — blessure passée, contrainte horaire, peur d'une rechute. Facultatif mais précieux.</div>
+      <textarea class="inp" id="free-text" placeholder="Ex : J'ai eu une tendinite au genou l'an dernier. Je cours tôt le matin avant le boulot et j'ai rarement plus d'1h. Je déteste les intervalles sur piste…" oninput="P.freeText=this.value"></textarea>
+      <div class="btn-row" style="margin-top:1rem">
+        <button class="btn btn-secondary btn-sm" onclick="ps()">← Retour</button>
+        <button class="btn btn-primary" id="bgen" onclick="genAll()" disabled>🚀 Générer mon programme</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ CALENDRIER ═════════════════════════ -->
+<div id="pg-cal" class="page">
+  <div class="wrap">
+    <div class="cal-nav">
+      <button class="cal-btn-nav" onclick="prevWk()">← Semaine préc.</button>
+      <h3 id="cal-title">Semaine 1 — Base aérobie</h3>
+      <button class="cal-btn-nav" onclick="nextWk()">Semaine suiv. →</button>
+    </div>
+    <div class="card">
+      <div class="wgrid" id="cal-grid"></div>
+      <div class="week-legend">
+        <div class="wl-item"><span class="wl-dot" style="background:var(--ink)"></span>Intensif / VMA</div>
+        <div class="wl-item"><span class="wl-dot" style="background:#d8f3dc;border:1px solid #1b4332"></span>Facile Z1-2</div>
+        <div class="wl-item"><span class="wl-dot" style="background:#e6f1fb;border:1px solid #0c447c"></span>Renfo</div>
+        <div class="wl-item"><span class="wl-dot" style="background:#eeedfe;border:1px solid #3c3489"></span>Côtes</div>
+        <div class="wl-item"><span class="wl-dot" style="background:var(--paper3)"></span>Repos</div>
+      </div>
+    </div>
+    <div id="session-panel"></div>
+    <div class="card" id="week-recap" style="display:none">
+      <div class="card-title">Résumé de la semaine</div>
+      <div id="week-recap-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ PROGRAMME ══════════════════════════ -->
+<div id="pg-prog" class="page">
+  <div class="wrap">
+    <div class="prog-header">
+      <div><h2 id="prog-title">Mon programme</h2><p id="prog-sub"></p></div>
+      <button class="btn btn-primary btn-sm" onclick="askCoachFull()">Détail semaine 1 →</button>
+    </div>
+    <div class="card" id="prog-phases"></div>
+    <div class="card">
+      <div class="card-title">Progression semaine par semaine</div>
+      <div style="display:flex;gap:12px;font-size:10px;color:var(--muted);margin-bottom:9px;font-weight:600">
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:5px;border-radius:2px;background:var(--ink);display:inline-block"></span>Construction</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:5px;border-radius:2px;background:var(--muted2);display:inline-block"></span>Récupération</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:5px;border-radius:2px;background:var(--green);display:inline-block"></span>Affûtage</span>
+      </div>
+      <div id="prog-weeks"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Distribution d'intensité — règle 80/20</div>
+      <div id="zones-display"></div>
+      <p class="zone-note">Ton footing facile doit vraiment être facile — si tu peux pas tenir une conversation tranquille, tu vas trop vite. Ouais, même si ça fait gênant de ralentir autant. C'est exactement là que se construit ton moteur aérobie.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ COACH ══════════════════════════════ -->
+<div id="pg-coach" class="page">
+  <div class="wrap">
+    <div class="sec-h" style="margin-bottom:1.2rem">
+      <div><h2 id="coach-greeting">Ton coach</h2><p id="coach-sub"></p></div>
+      <span class="badge badge-green">Coach IA actif</span>
+    </div>
+    <div class="mrow" id="coach-metrics"></div>
+    <div id="coach-insights"></div>
+    <div class="card">
+      <div class="card-title">Pose-lui n'importe quoi</div>
+      <div class="chat-area" id="chat-area"></div>
+      <div class="quick-qs" id="quick-qs"></div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chat-input" placeholder="Pose ta question au coach…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"/>
+        <button class="send-btn" onclick="sendMsg()">Envoyer →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ DONNÉES ════════════════════════════ -->
+<div id="pg-data" class="page">
+  <div class="wrap">
+    <div class="sec-h">
+      <div><h2>Mes données</h2><p id="data-sub">Importe tes activités pour enrichir ton programme</p></div>
+      <span class="badge badge-gray" id="acts-badge" style="display:none"></span>
+    </div>
+    <div class="card">
+      <div class="card-title">Importer mes activités</div>
+      <div class="src-grid">
+        <div class="src-card sel" id="sc-g" onclick="selSrc('g')"><div class="sc-ico">⌚</div><div class="sc-name" id="sn-g">Garmin Connect</div><div class="sc-sub">CSV · FIT · TCX</div></div>
+        <div class="src-card" id="sc-s" onclick="selSrc('s')"><div class="sc-ico">🟠</div><div class="sc-name" id="sn-s">Strava</div><div class="sc-sub">activities.csv</div></div>
+        <div class="src-card" id="sc-c" onclick="selSrc('c')"><div class="sc-ico">🔵</div><div class="sc-name" id="sn-c">Coros</div><div class="sc-sub">Training Hub</div></div>
+      </div>
+      <div class="dropzone" id="dz" ondragover="dzOv(event)" ondragleave="dzLv()" ondrop="dzDp(event)" onclick="document.getElementById('fi').click()">
+        <div class="dropzone-ico">📂</div>
+        <div class="dropzone-title">Glisse ton fichier ici</div>
+        <div class="dropzone-sub">CSV · FIT · TCX · ZIP acceptés</div>
+        <input type="file" id="fi" accept=".csv,.fit,.tcx,.zip" style="display:none" onchange="loadFile(this)"/>
+        <button class="btn btn-primary btn-sm" style="margin-top:14px" onclick="event.stopPropagation();document.getElementById('fi').click()">Choisir un fichier</button>
+      </div>
+      <div id="import-ok" style="display:none;margin-top:.9rem"><div class="insight" id="import-ok-msg"></div></div>
+    </div>
+    <div id="data-dash" style="display:none">
+      <div class="mrow" id="data-metrics"></div>
+      <div id="data-insights"></div>
+      <div class="card">
+        <div class="card-title">Volume hebdomadaire — 12 semaines</div>
+        <div class="ch-wrap ch-180"><canvas id="ch-weekly"></canvas></div>
+      </div>
+      <div class="row">
+        <div class="col"><div class="card"><div class="card-title">Charge ACWR</div><div class="ch-wrap ch-140"><canvas id="ch-acwr"></canvas></div><p class="ch-note">Zone verte 0.8–1.3 · rouge = risque blessure</p></div></div>
+        <div class="col"><div class="card"><div class="card-title">Zones fréquence cardiaque</div><div class="ch-wrap ch-140"><canvas id="ch-zones"></canvas></div><p class="ch-note">Cible : 80% en Z1-Z2 · Seiler 2010</p></div></div>
+      </div>
+      <div class="card">
+        <div class="act-list-header">
+          <div class="card-title" style="margin:0">Historique des activités</div>
+          <div class="flt-row">
+            <button class="flt active" onclick="fltAct('all',this)">Tout</button>
+            <button class="flt" onclick="fltAct('run',this)">Course</button>
+            <button class="flt" onclick="fltAct('strength',this)">Renfo</button>
+          </div>
+        </div>
+        <div id="act-list" style="margin-top:.7rem"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+// ─── PERSONA ──────────────────────────────────────────────────────
+const PERSONA = `Tu es le coach IA de PaceYou. Voici ta voix et ta philosophie exactes.
+
+STYLE (Style 4 — chaleureux, franc, analogies, brin d'humour) :
+- Tu parles comme un pote qui sait de quoi il parle. Direct, jamais condescendant.
+- Analogies et métaphores concrètes (ex: "ton footing facile doit être gênant tellement c'est lent").
+- Touche d'humour légère et naturelle. Toujours pédagogue — tu expliques le pourquoi.
+- Tu n'inventes jamais de réponses. Si tu ne sais pas, tu le dis clairement.
+
+PHILOSOPHIE D'ENTRAÎNEMENT :
+- "Trouve ton plaisir et ta raison de courir. Deviens ton champion, pas celui d'un autre."
+- Structure souple adaptée à la vie réelle. Pic de forme construit depuis la date de course.
+- Pas dogmatique sur la distribution d'intensité — ça dépend du profil et de la phase.
+- Erreur n°1 des coureurs : courir trop vite en footing. FC et ressenti priment sur le GPS.
+- Intervalles courts (30s–1min) : stimulants et fun, à doser. Les longs (2–5min) sont plus efficaces pour VO2max.
+- Intervalles longs/tempo : donne une allure indicative MAIS le RPE prime TOUJOURS sur l'allure fixée.
+- Sorties longues : parfois progressives ou à allure course, dénivelé pour varier. Outil gut training pré-compétition.
+- Côtes : VMA terrain (courtes) ou seuil terrain (longues) + bénéfice musculaire. Descente sous-estimée et à entraîner.
+- VARIÉTÉ = cœur de la programmation. Jamais deux séances identiques dans le même bloc.
+- Renfo : bénéfice réel sur l'économie de course. L'effet prévention blessures est sur-vendu par la science.
+- Gut training : pertinent ultra/marathon. 10 semaines avant minimum (beaucoup plus pour > 8h d'effort).
+- Progression douce +10% max/semaine. Gêne = adapte ou reporte — JAMAIS "pousse à travers".
+
+CE QUE TU NE DIS JAMAIS :
+- "Pousse à travers la douleur"
+- Des conseils nutritionnels ultra-précis sans base solide
+- Tout comportement radical ou extrême
+- Des allures fixées sans rappeler que le RPE prime
+
+Réponds en français, max 3-4 paragraphes courts, ton conversationnel.`;
+
+// ─── STATE ────────────────────────────────────────────────────────
+let step = 0, curWeek = 0;
+const P = { goal:null, level:null, runSeances:3, renfoSeances:2, volActuel:35, raceDate:null, raceName:'', priorities:[], freeText:'' };
+let activities = [], charts = {}, chatHistory = [];
+
+// ─── SESSION DB ───────────────────────────────────────────────────
+const SDB = {
+  ef_30: { type:'de', title:'Footing facile — 30 min', meta:'30 min · Z1-Z2 · Conversation fluide', blocks:[{t:'Échauffement',c:'5 min de marche active ou trot très léger pour activer le système cardiovasculaire.'},{t:'Corps de séance',c:'25 min en Z1-Z2. Test : tu dois pouvoir tenir une vraie conversation sans souffler. Si tu souffles, ralentis — même si ça fait 6\'30"/km, c\'est parfait. C\'est exactement là que se construit ton moteur aérobie.'},{t:'Retour au calme',c:'2-3 min de marche. Quelques étirements dynamiques si tu en as envie.'}], tip:{dom:'récup', txt:'Bonne nouvelle et mauvaise nouvelle. Mauvaise : ton footing d\'aujourd\'hui est probablement trop rapide si tu regardes ta FC. Bonne nouvelle : ralentir, c\'est la chose la plus simple à corriger. Règle d\'or : si tu peux pas chanter sous la douche en courant, tu vas trop vite.', nutri:'Hydratation suffit pour 30 min. Pas besoin de gel — ton corps a les réserves nécessaires. Une bonne assiette après, c\'est tout.'} },
+
+  ef_45: { type:'de', title:'Footing facile — 45 min', meta:'45 min · Z1-Z2 · FC 65-75% FCmax', blocks:[{t:'Échauffement',c:'5 min de marche ou trot léger.'},{t:'Corps de séance',c:'35-38 min en Z1-Z2. FC cible : 65-75% de ta FCmax. L\'allure est secondaire — c\'est la FC et la sensation qui commandent. Tu dois pouvoir tenir une conversation normale sans effort.'},{t:'Retour au calme',c:'3-4 min de marche. Étirements légers si tu le souhaites.'}], tip:{dom:'récup', txt:'L\'image qui résume tout : ton footing facile doit être gênant tellement c\'est lent. Pas agréablement challengeant — carrément gênant. La raison ? À 65-75% FCmax, tu construis ta densité mitochondriale sans accumuler de fatigue. C\'est de l\'investissement à long terme.', nutri:'Pour 45 min, l\'eau suffit. Si t\'as tendance à avoir faim, une banane ou un toast 30-40 min avant peut aider.'} },
+
+  ef_long: { type:'de', title:'Sortie longue progressive', meta:'60-90 min · Z1-Z2 · Option allure course', blocks:[{t:'Échauffement',c:'10 min très facile pour bien ouvrir les jambes et monter progressivement en FC.'},{t:'Corps principal',c:'50-70 min en Z1-Z2 confort. Option : les 15-20 dernières minutes avec une légère accélération vers l\'allure semi ou marathon. RPE 6-7/10 max — ne transforme pas ta sortie longue en séance intense.'},{t:'Gut training (si objectif > 1h30)',c:'Profite de cette séance pour t\'entraîner à manger en courant. Commence avec 30-40g de glucides/heure (gel, compote, pâte de fruit). Note ta tolérance intestinale. L\'intestin s\'entraîne comme les jambes.'},{t:'Retour au calme',c:'5 min de marche. Étirements dynamiques quadriceps, mollets.'}], tip:{dom:'nutri', txt:'La sortie longue, c\'est pas juste pour les jambes — c\'est une répétition générale. Entraîne ton intestin dès maintenant si tu prépares une course longue. Commence modeste (30g/h) et monte progressivement. Règle absolue : rien de nouveau le jour J.', nutri:'Avant : repas digeste 2-3h avant. Pendant : teste ton ravitaillement de course — gel, compote, pâte de fruit. Après : 20-30g de protéines dans les 30 min + glucides pour relancer les stocks glycogène.'} },
+
+  hiit_court: { type:'dt', title:'VMA — Intervalles courts', meta:'8-10 × 30-45s · Récup = durée effort · VMA terrain', blocks:[{t:'Échauffement',c:'12-15 min progressif. 3-4 accélérations courtes de 15-20s à la fin pour activer le système nerveux.'},{t:'Corps de séance',c:'8-10 répétitions de 30-45s à intensité max (9/10 RPE — vraiment dur, mais contrôlé). Récup active entre chaque : marche ou trot léger pendant la même durée que l\'effort. Note : les intervalles courts sont fun et stimulants, mais les longs (2-5 min) sont scientifiquement plus efficaces pour la VO2max. À doser dans le programme.'},{t:'Retour au calme',c:'10-12 min de footing très facile + mobilité hanches et mollets.'}], tip:{dom:'récup', txt:'La séance courte intense, c\'est le pic d\'adrénaline du programme. Fun, efficace — mais à ne pas abuser. Ton système nerveux central prend un coup qu\'il ne récupère pas aussi vite que tes muscles. Jambes lourdes demain : normal. Jambes lourdes dans 3 jours : tu as trop poussé.', nutri:'Avant : pas de grosse prise dans l\'heure qui précède. Un gel ou une banane 20 min avant si nécessaire. Après : protéines + glucides rapides dans les 30 min.'} },
+
+  hiit_long: { type:'dt', title:'Seuil — Intervalles longs', meta:'4-6 × 3-5 min · Récup 2-3 min · RPE 7-8/10', blocks:[{t:'Échauffement',c:'12-15 min progressif. 2-3 accélérations de 20s pour préparer le système lactique.'},{t:'Corps de séance',c:'4-6 répétitions de 3-5 min. Intensité : allure seuil, RPE 7-8/10. Allure indicative : environ ton allure sur 10-15km en course. MAIS — et c\'est crucial — le RPE prime TOUJOURS sur l\'allure. Si 7-8/10 de ressenti c\'est plus lent que prévu, c\'est parfait. Suis le ressenti, pas le GPS. Récup : 2-3 min de footing léger entre chaque répétition.'},{t:'Retour au calme',c:'10-12 min très facile. Étirements statiques post-séance.'}], tip:{dom:'perf', txt:'La séance reine. L\'erreur classique ? Partir trop vite sur le premier intervalle et finir en vrac sur le dernier. Une bonne séance de seuil, c\'est une séance où le dernier ressemble au premier. Garde du jus. Et rappelle-toi : RPE 7-8/10 — si tu souffles trop pour parler, c\'est Z4, pas seuil.', nutri:'Séance exigeante — assure-toi d\'être bien rechargé en glycogène (repas glucidique 2-3h avant). Après : récup prioritaire. 20-30g de protéines + glucides.'} },
+
+  cote_courte: { type:'dh', title:'Côtes courtes — Force-vitesse', meta:'10 × 30-45s · Pente 6-10% · VMA terrain', blocks:[{t:'Échauffement',c:'12-15 min progressif sur terrain plat. 3 accélérations courtes à la fin.'},{t:'Corps de séance',c:'10 répétitions de 30-45s en côte (pente 6-10%) à intensité 8-9/10. Foulée dynamique, bras actifs, attaque franche. Option force musculaire : avant chaque montée, 45s de squat isométrique (position "chaise"). Récup : descente active en marchant ou trottinant — ne zappe pas la descente, c\'est du travail de technique.'},{t:'Retour au calme',c:'10 min de footing plat facile + mobilité hanches et mollets.'}], tip:{dom:'muscu', txt:'La côte courte, c\'est la VMA version tout-terrain. Même logique physiologique, meilleur recrutement musculaire (fessiers, ischio, mollets). Et c\'est infiniment plus fun qu\'une piste. Bonus : la descente en trot améliore la fréquence et la technique de foulée — exploite-la.', nutri:'Séance intense — même protocole que les intervalles. Après : protéines + glucides dans les 30 min.'} },
+
+  cote_longue: { type:'dh', title:'Côtes longues — Endurance terrain', meta:'4-6 × 3-5 min · Pente progressive · Seuil trail', blocks:[{t:'Échauffement',c:'12-15 min progressif dont les 3 dernières avec un début de montée pour acclimater.'},{t:'Corps de séance',c:'4-6 répétitions de 3-5 min en montée à RPE 7-8/10. Allure libre — le dénivelé et le terrain calibrent naturellement l\'intensité. Profites-en pour travailler la technique de montée : inclinaison légère vers l\'avant, appui sur le milieu du pied, bras actifs.'},{t:'Focus descente',c:'Genoux fléchis, regard loin devant, réception pied à plat. La descente technique s\'entraîne — ne te laisse pas aller en "roue libre". Travaille l\'excentrique de tes quadriceps.'},{t:'Retour au calme',c:'10 min facile + étirements quadriceps et ischio.'}], tip:{dom:'trail', txt:'Statistique qui fait mal : la descente est sous-entraînée chez 90% des trailers. Tout le monde kiffe la montée, personne ne travaille vraiment la descente. Résultat : quads en feu après 30 km, temps perdu, risque de chute. Traite les descentes comme un entraînement à part entière.', nutri:'En trail, l\'estomac est plus sollicité qu\'en plat (vibrations, posture). Les sorties longues trail sont parfaites pour le gut training — pratique avaler en montée ET en descente.'} },
+
+  renfo_A: { type:'ds', title:'Renfo A — Fessiers & Membres inférieurs', meta:'45-55 min · Circuit · Économie de course', blocks:[{t:'Échauffement',c:'5 min mobilité hanches + fentes dynamiques + squats légers'},{t:'Circuit principal — 3 séries',c:'Squat unilatéral × 10/jambe | Single-leg RDL × 10/jambe | Hip thrust × 15 | Fentes marchées × 20 pas | Clamshells avec élastique × 15/côté. Repos 60-90 sec entre les séries.'},{t:'Core',c:'Gainage frontal 3 × 40s | Gainage latéral 3 × 30s/côté | Dead bug 3 × 10/côté'},{t:'Retour au calme',c:'5 min étirements fessiers, ischio, flexion de hanche.'}], tip:{dom:'muscu', txt:'Bonne nouvelle/mauvaise nouvelle sur le renfo. Mauvaise : la science est plus nuancée qu\'on le dit sur la prévention des blessures. Bonne : l\'impact sur ton économie de course est réel et documenté — courir moins cher en énergie, c\'est courir plus vite ou plus longtemps pour le même effort. Fais-le pour ça.', nutri:'Dans les 30 min après : 20-30g de protéines + quelques glucides (yaourt grec, shake, riz). Ton corps construit pendant la récup, pas pendant l\'effort.'} },
+
+  renfo_B: { type:'ds', title:'Renfo B — Pliométrie & Force explosive', meta:'40-50 min · Pliométrie + gainage dynamique', blocks:[{t:'Échauffement',c:'5 min mobilité + activation neuromusculaire légère (sauts sur place, montées genoux, skipping)'},{t:'Pliométrie — 3 séries',c:'Sauts en longueur × 8 | Squat jumps × 10 | Step-up explosif × 8/jambe | Box jumps ou montées de marches × 10'},{t:'Renfo spécifique course',c:'Nordic curl (excentrique) × 6 | Bulgarian split squat × 10/jambe | Step-down excentrique (simulation descente) × 12/jambe'},{t:'Finisher core',c:'Planche 3 × 40s | Russian twist 3 × 20 | Superman 3 × 12'}], tip:{dom:'muscu', txt:'La pliométrie, c\'est le renfo qui ressemble le plus à courir. Mouvements explosifs, rebond, réactivité neuromusculaire — ton système nerveux adore ça, et les adaptations sont directement transférables à ta foulée. Attention : ne la colle pas le lendemain d\'une sortie longue ou d\'une intense.', nutri:'Idem Renfo A : protéines dans les 30 min post-séance. Si tu es en phase de construction musculaire active, monte légèrement tes apports (1.8-2g de protéines/kg/jour les jours de renfo).'} },
+
+  repos: { type:'drest', title:'Repos ou récupération active', meta:'Repos actif recommandé', blocks:[{t:'Option 1 — Repos complet',c:'Rien. Et c\'est aussi de l\'entraînement — les adaptations se font pendant la récup, pas pendant l\'effort.'},{t:'Option 2 — Récupération active (recommandé)',c:'20-30 min de marche, vélo très léger, natation douce ou yoga. L\'objectif : activer la circulation sanguine pour éliminer les déchets métaboliques, sans fatiguer les muscles.'}], tip:{dom:'récup', txt:'Le repos, c\'est pas de la paresse — c\'est là que tu deviens meilleur. Ton corps construit et répare pendant que tu ne fais rien. Une séance facile vaut souvent mieux qu\'un repos complet, mais si t\'as les jambes lourdes et la tête qui tourne : allonge-toi et savours.', nutri:'Jours de repos : réduis légèrement les glucides (3-4g/kg vs 5-7g/kg les jours d\'entraînement). Continue les protéines (2g/kg) — ton corps reconstruit les fibres musculaires même sans bouger.'} }
+};
+
+function buildWeekTemplate(wNum, total, run, renfo) {
+  const taper = Math.max(total-3, Math.floor(total*.85));
+  const phase = wNum <= Math.floor(total*.25) ? 'base' : wNum <= Math.floor(total*.6) ? 'build' : wNum > taper ? 'taper' : 'specific';
+  const t = {
+    '3_2':['ef_45','renfo_A','hiit_long','repos','renfo_B','ef_long','repos'],
+    '3_1':['ef_45','repos','hiit_long','renfo_A','repos','ef_long','repos'],
+    '4_2':['ef_45','renfo_A','hiit_long','ef_30','cote_courte','renfo_B','ef_long'],
+    '4_1':['ef_45','renfo_A','hiit_long','ef_30','repos','ef_long','ef_45'],
+    '5_2':['ef_45','renfo_A','hiit_long','ef_30','cote_courte','renfo_B','ef_long'],
+    '5_1':['ef_45','renfo_A','hiit_long','ef_30','repos','ef_long','ef_45'],
+    '2_2':['renfo_A','ef_45','repos','renfo_B','repos','ef_long','repos'],
+  };
+  let base = t[Math.min(run,5)+'_'+Math.min(renfo,2)] || t['3_2'];
+  if (phase === 'specific') base = base.map(s => s === 'hiit_long' ? 'cote_longue' : s);
+  if (phase === 'taper') base = base.map(s => s.startsWith('hiit')||s.startsWith('cote') ? 'ef_45' : s);
+  if (wNum%3===0) base = base.map(s => s==='hiit_long' ? 'hiit_court' : s);
+  if (wNum%5===0) base = base.map(s => (s==='hiit_long'||s==='hiit_court') ? 'cote_courte' : s);
+  if (wNum%7===0) base = base.map(s => s==='cote_courte' ? 'cote_longue' : s);
+  return base;
+}
+
+// ─── ONBOARDING ───────────────────────────────────────────────────
+function scrollOb() { document.getElementById('ob-card').scrollIntoView({behavior:'smooth'}); }
+function ns() { const s=document.querySelectorAll('.ob-step'); if(step<s.length-1){s[step].classList.remove('active');step++;s[step].classList.add('active');updDots();} }
+function ps() { const s=document.querySelectorAll('.ob-step'); if(step>0){s[step].classList.remove('active');step--;s[step].classList.add('active');updDots();} }
+function updDots() { for(let i=0;i<6;i++){const d=document.getElementById('od'+i);d.classList.remove('done','cur');if(i<step)d.classList.add('done');else if(i===step)d.classList.add('cur');} }
+function sel(el,key,val) { el.closest('.cgrid').querySelectorAll('.cc').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); P[key]=val; const nb=document.getElementById('bn'+step); if(nb)nb.disabled=false; }
+function togP(el,val) { el.classList.toggle('sel'); if(el.classList.contains('sel')){if(!P.priorities.includes(val))P.priorities.push(val);}else{P.priorities=P.priorities.filter(p=>p!==val);} document.getElementById('bn4').disabled=P.priorities.length===0; }
+function calcWks() { if(!P.raceDate)return; const w=Math.round((new Date(P.raceDate)-new Date())/(7*24*60*60*1000)); const el=document.getElementById('wkbadge'); el.style.display='inline-block'; if(w<4){el.className='wk-badge warn';el.textContent='⚠ Seulement '+w+' semaines — programme court adapté.';}else{el.className='wk-badge ok';el.textContent='✓ '+w+' semaines disponibles — programme complet possible !';} }
+function updRenfoSug() { const r=P.runSeances; const sug=r<=2?1:r<=4?2:r<=5?2:3; document.getElementById('renfo-sug').innerHTML='💡 Pour '+r+' séance'+(r>1?'s':'')+' de course par semaine, ton coach suggère <strong>'+sug+' séance'+(sug>1?'s':'')+' de renfo</strong> — l\'équilibre optimal pour améliorer l\'économie de course sans surcharger la récup.'; }
+
+// ─── GENERATE ─────────────────────────────────────────────────────
+function genAll() {
+  const gL={5k10k:'5km–10km',semi:'Semi-marathon',marathon:'Marathon 42km',trail:'Trail / Ultra',sante:'Santé & bien-être'};
+  const lvL={debut:'Débutant',inter:'Intermédiaire',confirme:'Confirmé',perf:'Performance'};
+  const bV={debut:20,inter:35,confirme:50,perf:70};
+  const pV={debut:40,inter:60,confirme:85,perf:110};
+  const weeks=P.raceDate?Math.max(4,Math.round((new Date(P.raceDate)-new Date())/(7*24*60*60*1000))):12;
+  const sKm=Math.max(P.volActuel,bV[P.level]||30), eKm=pV[P.level]||60;
+  const tS=Math.max(weeks-3,Math.floor(weeks*.85));
+  P.wd=[];
+  for(let w=1;w<=weeks;w++){
+    const iR=w>1&&w%4===0, iT=w>tS;
+    const pr=Math.min(1,(w-1)/Math.max(tS-1,1));
+    const km=iR?Math.round((sKm+(eKm-sKm)*pr)*.65):iT?Math.round(eKm*(1-.15*(w-tS))):Math.round(sKm+(eKm-sKm)*pr);
+    P.wd.push({w,km:Math.max(km,10),isR:iR,isT:iT,phase:w<=Math.floor(weeks*.25)?'base':w<=Math.floor(weeks*.6)?'build':iT?'taper':'specific'});
+  }
+  P.weeks=weeks; P.goalLabel=gL[P.goal]||''; P.levelLabel=lvL[P.level]||'';
+  P.calWeeks=[];
+  for(let w=0;w<weeks;w++) P.calWeeks.push(buildWeekTemplate(w+1,weeks,P.runSeances,P.renfoSeances));
+  buildProgPage(); buildCoachPage(); buildCalendar();
+  ['nav-cal','nav-prog','nav-coach'].forEach(id=>document.getElementById(id).disabled=false);
+  goPg('cal',document.getElementById('nav-cal'));
+}
+
+// ─── CALENDAR ─────────────────────────────────────────────────────
+function buildCalendar() { renderWeek(0); }
+function renderWeek(wIdx) {
+  curWeek=wIdx;
+  const wd=P.wd?P.wd[wIdx]:{w:wIdx+1,phase:'base'};
+  const phN={base:'Base aérobie',build:'Construction',specific:'Spécifique',taper:'Affûtage'};
+  document.getElementById('cal-title').textContent='Semaine '+(wIdx+1)+' — '+(phN[wd.phase]||'Base aérobie');
+  const days=['LUN','MAR','MER','JEU','VEN','SAM','DIM'];
+  const sess=P.calWeeks?P.calWeeks[wIdx]:Array(7).fill('repos');
+  const dC={dt:'dt',de:'de',ds:'ds',dh:'dh',dr:'dr',drest:'drest'};
+  const dL={dt:'I',de:'E',ds:'S',dh:'C',dr:'—',drest:'R'};
+  const sI={ef_30:'30min Z2',ef_45:'45min Z2',ef_long:'Sortie longue',hiit_court:'VMA courts',hiit_long:'Seuil / Tempo',cote_courte:'Côtes courtes',cote_longue:'Côtes longues',renfo_A:'Renfo A',renfo_B:'Renfo B',repos:'Repos actif'};
+  document.getElementById('cal-grid').innerHTML=days.map((d,i)=>{
+    const sk=sess[i]||'repos';const sd=SDB[sk]||SDB.repos;
+    return `<div class="dcell" onclick="showSess('${sk}',${i})" id="day-${i}"><span class="d-name">${d}</span><div class="d-dot ${dC[sd.type]||'drest'}">${dL[sd.type]||'R'}</div><div class="d-info">${sI[sk]||'Repos'}</div></div>`;
+  }).join('');
+  document.getElementById('session-panel').innerHTML='';
+  const ns2=(P.calWeeks?P.calWeeks[wIdx]:[]).filter(s=>!s.includes('repos')).length;
+  document.getElementById('week-recap').style.display='block';
+  document.getElementById('week-recap-content').innerHTML=`
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="tip-pill">🏃 ~${wd.km||0}km objectif</span>
+      <span class="tip-pill">📅 ${ns2} séances planifiées</span>
+      <span class="tip-pill">${wd.isR?'🔄 Semaine de récupération':wd.isT?'⬇ Affûtage':'📈 Semaine de construction'}</span>
+    </div>
+    ${wd.isR?'<div class="insight" style="margin-top:.7rem">Cette semaine, on lève le pied volontairement. C\'est pas du recul — c\'est de l\'investissement. Les adaptations se consolident pendant les semaines de récupération. Profites-en.</div>':''}
+    ${wd.isT?'<div class="insight" style="margin-top:.7rem">Affûtage : on réduit le volume (-40%) mais on garde l\'intensité. Ton corps se repose tout en maintenant le fil neuromusculaire. Résiste à l\'envie d\'en rajouter — c\'est là que beaucoup gâchent leur préparation.</div>':''}`;
+}
+function showSess(sk,dayIdx) {
+  document.querySelectorAll('.dcell').forEach(c=>c.classList.remove('sel-day'));
+  document.getElementById('day-'+dayIdx)?.classList.add('sel-day');
+  const sd=SDB[sk]||SDB.repos;
+  const dIco={récup:'🛌',nutri:'🥗',perf:'⚡',muscu:'💪',trail:'⛰️'};
+  document.getElementById('session-panel').innerHTML=`
+    <div class="session-detail">
+      <div class="sd-header">
+        <div><div class="sd-title">${sd.title}</div><div class="sd-meta">${sd.meta}</div></div>
+      </div>
+      ${sd.blocks.map(b=>`<div class="sd-block"><div class="sd-block-title">${b.t}</div><div class="sd-content">${b.c}</div></div>`).join('')}
+      ${sd.tip?`<div class="coach-tip">
+        <div class="coach-avatar">🤖</div>
+        <div class="coach-tip-inner">
+          <div class="coach-tip-label">${dIco[sd.tip.dom]||'💬'} Conseil du coach</div>
+          <div class="coach-tip-text">${sd.tip.txt}</div>
+          ${sd.tip.nutri?`<div class="nutri-note">🥗 <strong>Nutrition :</strong> ${sd.tip.nutri}</div>`:''}
+        </div>
+      </div>`:''}
+    </div>`;
+}
+function prevWk(){if(curWeek>0)renderWeek(curWeek-1);}
+function nextWk(){if(P.weeks&&curWeek<P.weeks-1)renderWeek(curWeek+1);}
+
+// ─── PROGRAMME ────────────────────────────────────────────────────
+function buildProgPage() {
+  const p=P,w=p.weeks;
+  document.getElementById('prog-title').textContent='Programme '+p.goalLabel;
+  document.getElementById('prog-sub').textContent=p.levelLabel+' · '+w+' semaines · '+(p.runSeances||3)+'j course + '+(p.renfoSeances||2)+'j renfo'+(p.raceName?' · '+p.raceName:'');
+  const phases=w<=8?[
+    {l:'Base',w:'S1–S'+Math.round(w*.4),c:'#185FA5',d:'Fondations aérobies · courir vraiment facile · activation musculaire'},
+    {l:'Construction',w:'S'+(Math.round(w*.4)+1)+'–S'+Math.round(w*.8),c:'#2a6e4a',d:'Volume progressif · séances qualité · variété des terrains'},
+    {l:'Affûtage',w:'S'+(Math.round(w*.8)+1)+'–S'+w,c:'#8a8478',d:'-30% volume · intensité maintenue · fraîcheur musculaire'}
+  ]:[
+    {l:'Base aérobie',w:'S1–S'+Math.round(w*.25),c:'#185FA5',d:'80% Z1-Z2 · fondations mitochondriales · activation renfo'},
+    {l:'Construction',w:'S'+(Math.round(w*.25)+1)+'–S'+Math.round(w*.55),c:'#2a6e4a',d:'Volume + qualité · intervalles progressifs · variété terrains'},
+    {l:'Spécifique',w:'S'+(Math.round(w*.55)+1)+'–S'+Math.round(w*.85),c:'#1a1814',d:'Sorties longues · allure cible · gut training pré-comp'},
+    {l:'Affûtage',w:'S'+(Math.round(w*.85)+1)+'–S'+w,c:'#8a8478',d:'-40% volume · intensité maintenue · récup neuromusculaire'}
+  ];
+  document.getElementById('prog-phases').innerHTML='<div class="card-title">Phases · '+p.goalLabel+'</div><div class="phasebar">'+phases.map(ph=>`<div class="phseg" style="flex:1;background:${ph.c}">${ph.l}</div>`).join('')+'</div><div style="display:grid;grid-template-columns:repeat('+Math.min(phases.length,2)+',1fr);gap:8px;margin-top:9px">'+phases.map(ph=>`<div style="padding:10px 12px;background:var(--paper2);border-radius:var(--r);border-left:3px solid ${ph.c}"><div style="font-size:12px;font-weight:700;margin-bottom:3px">${ph.l} · <span style="font-weight:500;color:var(--muted)">${ph.w}</span></div><div style="font-size:11px;color:var(--muted)">${ph.d}</div></div>`).join('')+'</div>';
+  const mKm=Math.max(...p.wd.map(x=>x.km));
+  document.getElementById('prog-weeks').innerHTML=p.wd.map(x=>{
+    const cls=x.isT?'tap':x.isR?'rec':'';
+    const lbl=x.isT?' ↓↓':x.isR?' ↓':'';
+    return `<div class="pw"><span class="pwn">S${x.w}<span style="color:var(--accent)">${lbl}</span></span><div class="pwbw"><div class="pwb ${cls}" style="width:${Math.round(x.km/mKm*100)}%"></div></div><span class="pwkm">${x.km}km</span></div>`;
+  }).join('');
+  document.getElementById('zones-display').innerHTML=[{l:'Z1 récup',pct:42,c:'#3B6D11'},{l:'Z2 aérobie',pct:38,c:'#639922'},{l:'Z3 tempo',pct:12,c:'#E8541A'},{l:'Z4-5 dur',pct:8,c:'#B03D10'}].map(z=>`<div class="zone-row"><span class="zone-lbl">${z.l}</span><div class="zone-bw"><div class="zone-bar" style="width:${z.pct}%;background:${z.c}"></div></div><span class="zone-pct">${z.pct}%</span></div>`).join('');
+}
+
+// ─── COACH ────────────────────────────────────────────────────────
+function buildCoachPage() {
+  const p=P;
+  document.getElementById('coach-greeting').innerHTML='Salut, <span style="color:var(--accent)">champion</span> 👋';
+  document.getElementById('coach-sub').textContent=(p.goalLabel?'Programme '+p.goalLabel+' · ':'')+p.weeks+' semaines'+(p.raceName?' · '+p.raceName:'');
+  document.getElementById('coach-metrics').innerHTML=[
+    {l:'Objectif',v:p.goalLabel?p.goalLabel.split(' ').slice(0,2).join(' '):'—',u:'',s:''},
+    {l:'Semaines',v:p.weeks||'—',u:'',s:p.raceName||'avant course'},
+    {l:'Séances/sem',v:(p.runSeances||3)+'j+'+(p.renfoSeances||2)+'r',u:'',s:'course + renfo'},
+    {l:'Volume S1',v:p.wd?p.wd[0].km:'—',u:'km',s:'Pic : '+(p.wd?Math.max(...p.wd.map(x=>x.km)):'—')+'km'}
+  ].map(m=>`<div class="met"><div class="m-lbl">${m.l}</div><div class="m-val">${m.v}<span class="m-unit"> ${m.u}</span></div><div class="m-sub">${m.s}</div></div>`).join('');
+  let ins='';
+  if(p.priorities.includes('plaisir'))ins+=`<div class="insight">😄 <strong>Plaisir en priorité :</strong> si une séance te pèse vraiment, dis-le au coach — on trouve une alternative. Un programme abandonné ne sert à personne.</div>`;
+  if(p.priorities.includes('variete'))ins+=`<div class="insight">🎲 <strong>Variété :</strong> jamais deux séances identiques dans le même bloc. Formats, terrains, durées, intensités — tout change pour rester stimulant.</div>`;
+  if(p.priorities.includes('corps'))ins+=`<div class="insight">🩺 <strong>Santé d'abord :</strong> gêne ou suspicion de douleur = on adapte ou on reporte. Jamais "pousse à travers". Mieux vaut perdre une semaine que trois mois.</div>`;
+  if(p.priorities.includes('comprendre'))ins+=`<div class="insight">🧠 <strong>Autonomie :</strong> chaque conseil viendra avec son explication. Le but : que tu comprennes assez pour décider toi-même un jour.</div>`;
+  document.getElementById('coach-insights').innerHTML=ins;
+  let m=`Bonne nouvelle et mauvaise nouvelle. Mauvaise : ton programme va te demander de ralentir tes footings — probablement plus que tu le veux. Bonne nouvelle : c'est exactement là que tout commence.\n\n`;
+  if(p.goalLabel)m+=`Ton objectif : <strong>${p.goalLabel}</strong>, ${p.weeks} semaines de préparation. Ton programme est bâti sur tes contraintes réelles — pas sur ce que tu "devrais" faire selon un magazine.\n\n`;
+  if(p.priorities.includes('variete'))m+=`Tu m'as dit que la variété est importante — bonne nouvelle, c'est aussi le cœur de ma façon de programmer. Jamais deux séances identiques dans le même bloc.\n\n`;
+  if(p.freeText&&p.freeText.length>8)m+=`Tu m'as dit : "<em>${p.freeText.substring(0,120)}${p.freeText.length>120?'…':''}</em>" — j'en tiens compte dans chaque conseil.\n\n`;
+  m+=`Par où tu veux commencer ?`;
+  chatHistory=[{role:'assistant',content:m}]; renderChat();
+  document.getElementById('quick-qs').innerHTML=[
+    'Pourquoi courir lentement c\'est important ?',
+    'Détaille mes séances de cette semaine',
+    'Comment fonctionne le gut training ?',
+    'Comment gérer une semaine chargée au boulot ?'
+  ].map(q=>`<button class="qq" onclick="sendQuick(this.textContent)">${q}</button>`).join('');
+}
+function renderChat(){const a=document.getElementById('chat-area');a.innerHTML=chatHistory.map(m=>`<div class="bubble ${m.role==='user'?'user':'coach'}">${m.content.replace(/\n/g,'<br>')}</div>`).join('');a.scrollTop=a.scrollHeight;}
+async function sendMsg(){
+  const inp=document.getElementById('chat-input');const q=inp.value.trim();if(!q)return;
+  inp.value='';chatHistory.push({role:'user',content:q});renderChat();
+  const a=document.getElementById('chat-area');const lid='l'+Date.now();
+  a.innerHTML+=`<div class="bubble coach" id="${lid}"><div class="dot-pulse"><span></span><span></span><span></span></div></div>`;a.scrollTop=a.scrollHeight;
+  const ctx=`Profil utilisateur : objectif ${P.goalLabel||'?'}, niveau ${P.levelLabel||'?'}, ${P.runSeances||3} séances course + ${P.renfoSeances||2} renfo/sem, ${P.volActuel}km/sem actuellement, ${P.weeks||12} semaines de programme. Priorités : ${P.priorities.join(', ')}.${P.freeText?' Note libre : '+P.freeText:''}`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:PERSONA+'\n\n'+ctx+'\n\nQuestion : '+q}]})});
+    const data=await res.json();
+    const reply=data.content?.map(b=>b.text||'').join('')||'Je n\'ai pas pu répondre, réessaie.';
+    document.getElementById(lid)?.remove();chatHistory.push({role:'assistant',content:reply});renderChat();
+  }catch(e){
+    document.getElementById(lid)?.remove();
+    const ql=q.toLowerCase();let fb;
+    if(ql.includes('lentement')||ql.includes('footing')||ql.includes('z2')||ql.includes('facile'))
+      fb=`L'image qui résume tout : ton footing facile doit être gênant tellement c'est lent. Si des passants se demandent si tu cours vraiment, c'est exactement la bonne allure.\n\nLa raison physiologique : à 65-75% de FCmax, tu stimules la biogenèse mitochondriale sans accumuler de fatigue. En termes concrets, 60 min en Z2 augmentent ta densité mitochondriale de ~55% en 6 semaines. Cours trop vite ? Tu passes en zone grise — tu fatigues sans le stimulus. Le pire des deux mondes.\n\nRègle d'or : si tu peux pas tenir une conversation normale en courant, tu vas trop vite.`;
+    else if(ql.includes('semaine')||ql.includes('séance')||ql.includes('détail'))
+      fb=`Regarde ton calendrier (onglet Calendrier) — chaque jour est cliquable et t'affiche la séance complète avec l'échauffement, le cœur de séance, le retour au calme et un conseil coach.\n\nLa chose la plus importante sur les séances tempo/seuil : l'allure indiquée est indicative, pas une loi. Si RPE 7-8/10 ça t'amène à courir plus lentement que prévu, c'est parfait — le ressenti prime TOUJOURS sur le GPS.`;
+    else if(ql.includes('gut')||ql.includes('nutrition')||ql.includes('ventre')||ql.includes('intestin'))
+      fb=`L'intestin, c'est un muscle comme les autres — ça s'entraîne, et ça prend du temps.\n\nProtocole : commence le gut training au moins 10 semaines avant ta course (beaucoup plus si l'effort dure > 8h). Principe : augmente de 5-10g de glucides par heure chaque semaine. Démarre à 30-40g/h sur tes sorties longues et monte progressivement vers 60-90g/h selon ta tolérance.\n\nRègle absolue : rien de nouveau le jour J. Tout ce que tu consommes en course doit avoir été testé à l'entraînement — le gel, le parfum, le timing.`;
+    else if(ql.includes('boulot')||ql.includes('fatigue')||ql.includes('semaine chargée'))
+      fb=`Semaine compliquée ? La règle simple : en cas de doute, coupe le volume, pas l'intensité.\n\nConcrètement : 30 min bien faites valent mieux qu'une longue séance abandonnée. Si t'as l'énergie d'une huître, un footing de 20 min en Z1 est 100 fois mieux que rien — et ça maintient la routine.\n\nLe programme est là pour te servir, pas pour te culpabiliser. La vie s'impose parfois. C'est normal, et ça fait partie du plan.`;
+    else
+      fb=`Honnêteté d'abord : si je n'ai pas une réponse claire et fondée, je préfère le dire plutôt qu'inventer quelque chose.\n\nDonne-moi plus de contexte sur ta situation, et je pourrai t'aider mieux. C'est exactement le genre de question où ta situation spécifique compte plus que les généralités.`;
+    chatHistory.push({role:'assistant',content:fb});renderChat();
+  }
+}
+function sendQuick(q){document.getElementById('chat-input').value=q;sendMsg();}
+function askCoachFull(){goPg('coach',document.getElementById('nav-coach'));document.getElementById('chat-input').value='Détaille-moi chaque séance de ma semaine 1 — objectif '+P.goalLabel+', niveau '+P.levelLabel+', '+(P.runSeances||3)+'j course + '+(P.renfoSeances||2)+'j renfo, volume cible '+(P.wd?P.wd[0].km:P.volActuel)+'km. Pour chaque séance : objectif, intensité, durée, allures indicatives.';sendMsg();}
+
+// ─── NAV ──────────────────────────────────────────────────────────
+function goPg(name,btn){if(btn&&btn.disabled)return;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById('pg-'+name).classList.add('active');if(btn)btn.classList.add('active');}
+
+// ─── DATA ──────────────────────────────────────────────────────────
+function selSrc(s){['g','s','c'].forEach(x=>{document.getElementById('sc-'+x).classList.remove('sel');document.getElementById('sn-'+x).style.color='';});document.getElementById('sc-'+s).classList.add('sel');document.getElementById('sn-'+s).style.color='var(--green)';}
+function dzOv(e){e.preventDefault();document.getElementById('dz').classList.add('drag');}
+function dzLv(){document.getElementById('dz').classList.remove('drag');}
+function dzDp(e){e.preventDefault();dzLv();const f=e.dataTransfer.files[0];if(f){const dt=new DataTransfer();dt.items.add(f);document.getElementById('fi').files=dt.files;loadFile(document.getElementById('fi'));}}
+function loadFile(inp){if(!inp.files.length)return;const f=inp.files[0];if(f.name.endsWith('.csv')){const r=new FileReader();r.onload=e=>parseCSV(e.target.result);r.readAsText(f);}else{setTimeout(()=>parseDemoData(),900);}}
+function parseCSV(txt){
+  const res=Papa.parse(txt,{header:true,skipEmptyLines:true,dynamicTyping:true});
+  const rows=res.data;if(!rows||rows.length<3){parseDemoData();return;}
+  const cols=Object.keys(rows[0]);
+  const fc=(cands)=>{for(const c of cands)for(const col of cols)if(col.toLowerCase().includes(c.toLowerCase()))return col;return null;};
+  const dC=fc(['Activity Date','Date','Start Time','Date de']),diC=fc(['Distance','distance']),tC=fc(['Activity Type','Type','Sport']),tmC=fc(['Elapsed Time','Moving Time','Duration','Durée']),eC=fc(['Elevation Gain','Dénivelé','elevation']),hC=fc(['Average Heart Rate','FC moy','avg_hr']),nC=fc(['Activity Name','Nom','Name']);
+  if(!dC||!diC){parseDemoData();return;}
+  const parsed=[];
+  rows.forEach(r=>{let d=parseFloat(r[diC])||0;if(d>500)d/=1000;if(d<0.5)return;const dt=new Date(r[dC]);if(isNaN(dt.getTime()))return;const tp=(r[tC]||'').toLowerCase();let at='run';if(tp.includes('strength')||tp.includes('gym')||tp.includes('muscu'))at='strength';parsed.push({date:dt,dateStr:dt.toLocaleDateString('fr-FR'),name:r[nC]||at,type:at,dist:Math.round(d*10)/10,elevation:Math.round(parseFloat(r[eC])||0),durationMin:Math.round((parseFloat(r[tmC])||0)/60),avgHR:Math.round(parseFloat(r[hC])||0)});});
+  parsed.sort((a,b)=>b.date-a.date);
+  if(parsed.length<3){parseDemoData();return;}
+  activities=parsed;finishImport(parsed.length);
+}
+function parseDemoData(){
+  const now=new Date();const acts=[];
+  const names=['Footing Z2 facile','Intervalles seuil','Sortie longue progressive','VMA côtes courtes','Renfo jambes & core','Fartlek varié','Recovery run'];
+  const types=['run','run','run','run','strength','run','run'];
+  const base=P.volActuel||35;
+  for(let w=20;w>=0;w--){const s=Math.min((P.runSeances||3)+(P.renfoSeances||2),6);const wkm=base*(1+(20-w)/20*.35);for(let i=0;i<s;i++){const d=new Date(now);d.setDate(d.getDate()-w*7-Math.floor(Math.random()*7));const ti=i%types.length;const km=ti===2?wkm*.3:ti===0?wkm*.2:wkm*.15;acts.push({date:d,dateStr:d.toLocaleDateString('fr-FR'),name:names[ti],type:types[ti],dist:Math.max(4,Math.round(km*10)/10),elevation:types[ti]==='run'?Math.round(km*25):0,durationMin:Math.round(km*6.5+Math.random()*10),avgHR:types[ti]==='strength'?0:125+Math.round(Math.random()*35)});}}
+  acts.sort((a,b)=>b.date-a.date);activities=acts;finishImport(acts.length);
+}
+function finishImport(count){
+  document.getElementById('import-ok').style.display='block';
+  document.getElementById('import-ok-msg').textContent='✓ '+count+' activités analysées et intégrées !';
+  document.getElementById('acts-badge').style.display='inline-flex';
+  document.getElementById('acts-badge').textContent=count+' activités';
+  document.getElementById('data-sub').textContent=count+' activités importées · Analyse disponible';
+  buildDataDash();
+}
+function buildDataDash(){
+  const now=new Date();const d30=new Date(now);d30.setDate(d30.getDate()-30);
+  const r30=activities.filter(a=>a.date>=d30&&a.type==='run');
+  const km30=Math.round(r30.reduce((s,a)=>s+a.dist,0));
+  const dp30=Math.round(r30.reduce((s,a)=>s+a.elevation,0));
+  const a30=activities.filter(a=>a.date>=d30).length;
+  const hArr=r30.filter(a=>a.avgHR>0);
+  const avgHR=hArr.length?Math.round(hArr.reduce((s,a)=>s+a.avgHR,0)/hArr.length):0;
+  document.getElementById('data-metrics').innerHTML=[
+    {l:'Distance (30j)',v:km30,u:'km'},{l:'D+ (30j)',v:Math.round(dp30/100)/10,u:'km'},
+    {l:'Sorties (30j)',v:a30,u:''},{l:'FC moy active',v:avgHR||'—',u:avgHR?'bpm':''}
+  ].map(m=>`<div class="met"><div class="m-lbl">${m.l}</div><div class="m-val">${m.v}<span class="m-unit"> ${m.u}</span></div></div>`).join('');
+  const d7=new Date(now);d7.setDate(d7.getDate()-7);const d28=new Date(now);d28.setDate(d28.getDate()-28);
+  const ac=activities.filter(a=>a.date>=d7&&a.type==='run').reduce((s,a)=>s+a.dist,0);
+  const ch=activities.filter(a=>a.date>=d28&&a.type==='run').reduce((s,a)=>s+a.dist,0)/4;
+  const acwr=ch>0?Math.round(ac/ch*100)/100:1;
+  let ins='';
+  if(acwr>1.3)ins+=`<div class="insight warn">⚠ <strong>ACWR élevé (${acwr}) :</strong> ta charge aiguë est trop haute. Réduis le volume de 20% cette semaine — c'est de l'intelligence, pas de la faiblesse.</div>`;
+  else if(acwr<0.8)ins+=`<div class="insight">📉 <strong>ACWR bas (${acwr}) :</strong> tu as de la marge pour progresser. C'est le bon moment — mais max +10% par semaine.</div>`;
+  else ins+=`<div class="insight">✓ <strong>Charge équilibrée (ACWR ${acwr}) :</strong> ta progression est bien calibrée. Continue comme ça.</div>`;
+  const wHR=r30.filter(a=>a.avgHR>0);
+  if(wHR.length>3){const z12=Math.round(wHR.filter(a=>a.avgHR<155).length/wHR.length*100);if(z12<70)ins+=`<div class="insight warn">🎯 <strong>Zones FC :</strong> ${z12}% de tes sorties en Z1-Z2 (cible : 80%+). Tu cours probablement trop vite sur tes footings. Ralentis sans culpabiliser — c'est là que tu construis vraiment.</div>`;else ins+=`<div class="insight">✓ <strong>Distribution zones :</strong> ${z12}% en Z1-Z2 — bonne application de la règle 80/20.</div>`;}
+  document.getElementById('data-insights').innerHTML=ins;
+  buildCharts();buildActList();
+  document.getElementById('data-dash').style.display='block';
+}
+function mk(id,cfg){if(charts[id])charts[id].destroy();const ctx=document.getElementById(id);if(ctx)charts[id]=new Chart(ctx,cfg);}
+function buildCharts(){
+  const now=new Date();
+  const wkd=[];for(let w=11;w>=0;w--){const s=new Date(now);s.setDate(s.getDate()-w*7-6);const e=new Date(now);e.setDate(e.getDate()-w*7);s.setHours(0,0,0,0);e.setHours(23,59,59,999);const wa=activities.filter(a=>a.date>=s&&a.date<=e&&a.type==='run');wkd.push({l:w===0?'Cette sem':'S-'+w,km:Math.round(wa.reduce((s,a)=>s+a.dist,0)*10)/10});}
+  mk('ch-weekly',{type:'bar',data:{labels:wkd.map(x=>x.l),datasets:[{label:'km',data:wkd.map(x=>x.km),backgroundColor:'rgba(26,24,20,.72)',borderRadius:5,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:10}}},x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}}}}});
+  const now2=new Date();const acwrD=[];for(let w=11;w>=0;w--){const s7=new Date(now2);s7.setDate(s7.getDate()-w*7-6);const e7=new Date(now2);e7.setDate(e7.getDate()-w*7);const s28=new Date(now2);s28.setDate(s28.getDate()-w*7-27);s7.setHours(0,0,0,0);e7.setHours(23,59,59,999);s28.setHours(0,0,0,0);const ac=activities.filter(a=>a.date>=s7&&a.date<=e7&&a.type==='run').reduce((s,a)=>s+a.dist,0);const ch2=activities.filter(a=>a.date>=s28&&a.date<=e7&&a.type==='run').reduce((s,a)=>s+a.dist,0)/4;acwrD.push({l:w===0?'Sem.':'S-'+w,v:ch2>0?Math.round(ac/ch2*100)/100:null});}
+  mk('ch-acwr',{type:'line',data:{labels:acwrD.map(x=>x.l),datasets:[{label:'ACWR',data:acwrD.map(x=>x.v),borderColor:'#c8502a',backgroundColor:'rgba(200,80,42,.07)',tension:.4,fill:true,pointRadius:3,pointBackgroundColor:'#c8502a'},{label:'Max',data:acwrD.map(()=>1.3),borderColor:'rgba(180,0,0,.3)',borderDash:[5,5],pointRadius:0,fill:false},{label:'Min',data:acwrD.map(()=>0.8),borderColor:'rgba(42,110,74,.3)',borderDash:[5,5],pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:.3,max:1.8,grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:10}}},x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}}}}});
+  const d30f=new Date();d30f.setDate(d30f.getDate()-30);const r30f=activities.filter(a=>a.date>=d30f&&a.type==='run'&&a.avgHR>0);const z=[0,0,0,0,0];r30f.forEach(a=>{const h=a.avgHR;if(h<120)z[0]++;else if(h<140)z[1]++;else if(h<155)z[2]++;else if(h<170)z[3]++;else z[4]++;});const tot=z.reduce((s,v)=>s+v,0)||1;
+  mk('ch-zones',{type:'doughnut',data:{labels:['Z1 < 120','Z2 120-140','Z3 140-155','Z4 155-170','Z5 > 170'],datasets:[{data:z.map(v=>Math.round(v/tot*100)),backgroundColor:['#3B6D11','#639922','#E8541A','#B03D10','#7C3C21'],borderWidth:3,borderColor:'#f7f4ef'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:11,padding:7}}}}});
+}
+function buildActList(){
+  document.getElementById('act-list').innerHTML=activities.slice(0,20).map(a=>{
+    const ico=a.type==='run'?'🏃':a.type==='strength'?'🏋️':'🚴';
+    const bg=a.type==='run'?'#f0f7f3':a.type==='strength'?'#e6f1fb':'#fdf0eb';
+    return `<div class="act-item" data-type="${a.type}"><div class="act-ico" style="background:${bg}">${ico}</div><div style="flex:1;min-width:0"><div class="act-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.name}</div><div class="act-meta">${a.dateStr}${a.durationMin?' · '+Math.floor(a.durationMin/60)+'h'+String(a.durationMin%60).padStart(2,'0'):''}${a.avgHR?' · ❤ '+a.avgHR+' bpm':''}</div></div><div class="act-right"><div class="act-dist">${a.dist}km</div><div class="act-elev">${a.elevation?'▲'+a.elevation+'m':''}</div></div></div>`;
+  }).join('')||'<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:13px">Aucune activité trouvée</div>';
+}
+function fltAct(type,btn){document.querySelectorAll('.flt').forEach(f=>f.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.act-item').forEach(el=>{el.style.display=(type==='all'||el.dataset.type===type)?'flex':'none';});}
+
+// ─── INIT ──────────────────────────────────────────────────────────
+updRenfoSug();
+['nav-cal','nav-prog','nav-coach'].forEach(id=>document.getElementById(id).disabled=true);
+</script>
+</body>
+</html>
